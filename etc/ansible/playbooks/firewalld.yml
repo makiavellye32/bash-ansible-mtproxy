@@ -1,0 +1,8 @@
+---
+- hosts: mtproto
+  tasks:
+  - name: Выключаем firewalld
+    systemd:
+      name: firewalld
+      state: stopped
+      enabled: no

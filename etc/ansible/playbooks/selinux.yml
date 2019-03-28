@@ -1,0 +1,5 @@
+- hosts: mtproto
+  roles:
+    - role: ericsysmin.selinux
+      selinux_state: disabled
+      reboot: false

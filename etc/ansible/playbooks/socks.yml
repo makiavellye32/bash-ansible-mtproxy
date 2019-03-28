@@ -1,0 +1,16 @@
+---
+- hosts: mtproto
+  tasks:
+  - name: Подключение репы dante-server
+    yum:
+      name:
+        - http://mirror.ghettoforge.org/distributions/gf/gf-release-latest.gf.el7.noarch.rpm
+  - name: Включение репы
+    yum:
+      name: dante-server
+      enablerepo: gf-plus
+      state: present
+  - name: Установка socks5 proxy
+    yum:
+      name:
+        - dante-server

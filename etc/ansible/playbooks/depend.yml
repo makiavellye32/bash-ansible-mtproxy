@@ -1,0 +1,51 @@
+---
+- hosts: mtproto
+  tasks:
+  - name: Установка необходимых пакетов
+    yum:
+      name:
+        - epel-release
+        - nano
+        - wget
+        - mc
+        - net-tools
+        - bind-utils
+        - openssl-devel
+        - zlib-devel
+        - libtool
+        - perl-core
+        - git
+        - curl
+        - libselinux-python
+        - yum-utils
+        - https://copr-be.cloud.fedoraproject.org/results/bgstack15/stackrpms/epel-7-x86_64/00795482-openssl110/openssl110-1.1.0i-1.x86_64.rpm
+      state: present
+  - name: Установка группы пакетов 'Development tools'
+    yum:
+      name: "@Development tools"
+      state: present
+  - name: Обнвление всех пакетов
+    yum:
+      name: '*'
+      state: latest
+  - name: Симлинк на новую версию OpenSSL
+    file:
+      src: /usr/local/bin/openssl110
+      dest: /usr/bin/openssl
+      force: true
+      owner: root
+      group: root
+      state: link
+
+  - name: Установка MTProxy
+    yum:
+      name:
+        - https://extras.getpagespeed.com/release-el7-latest.rpm
+        - mtproxy
+
+  - name: Включение сервиса прокси
+    systemd:
+      name: mtproxy.service
+      state: started
+      enabled: yes
+
